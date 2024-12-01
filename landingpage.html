@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Sejarah Indonesia</title>
+    <style>
+        /* CSS */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: #001e4d;
+            color: #fff;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            color: #ffdd59;
+        }
+
+        .navbar .login-btn {
+            background: #ffdd59;
+            color: #001e4d;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .navbar .login-btn:hover {
+            background: #ffeaa7;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px;
+            background: linear-gradient(to bottom right, #001e4d, #0056b3);
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 50%;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content .start-btn {
+            background: #ffdd59;
+            color: #001e4d;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .hero-content .start-btn:hover {
+            background: #ffeaa7;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .features {
+            padding: 50px;
+            text-align: center;
+            background: #f9f9f9;
+        }
+
+        .features h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .feature-items {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .feature-item {
+            flex: 1;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .feature-item img {
+            max-width: 100px;
+            margin-bottom: 15px;
+        }
+
+        .feature-item h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #001e4d;
+            color: white;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Kuis Sejarah</div>
+        <nav>
+            <ul>
+                <li><a href="#features">Fitur</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#quiz">Mulai Kuis</a></li>
+            </ul>
+        </nav>
+        <button class="login-btn">Masuk</button>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Uji Pengetahuanmu Tentang Sejarah Indonesia</h1>
+            <p>Pelajari dan tantang dirimu dengan berbagai pertanyaan tentang perjuangan mempertahankan kemerdekaan Indonesia.</p>
+            <button class="start-btn" onclick="startQuiz()">Mulai Kuis</button>
+        </div>
+        <div class="hero-image">
+            <img src="assets/CSS/JS/IMG/indonesia.png" alt="Ilustrasi Kuis Sejarah">
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <h2>Kenapa Memilih Kuis Ini?</h2>
+        <div class="feature-items">
+            <div class="feature-item">
+                <img src="assets/CSS/JS/IMG/Stematel.png" alt="Belajar Sejarah">
+                <h3>Belajar Sejarah</h3>
+                <p>Memahami lebih dalam tentang perjuangan bangsa Indonesia dengan cara yang menyenangkan.</p>
+            </div>
+            <div class="feature-item">
+                <img src="assets/CSS/JS/IMG/TI.png" alt="Interaktif">
+                <h3>Interaktif</h3>
+                <p>Dilengkapi gambar dan audio untuk pengalaman yang lebih menarik.</p>
+            </div>
+            <div class="feature-item">
+                <img src="assets/CSS/JS/IMG/yayasan.png" alt="Tantangan">
+                <h3>Tantangan</h3>
+                <p>Bersaing dengan teman-temanmu untuk melihat siapa yang lebih unggul.</p>
+            </div>
+        </div>
+    </section>
+
+    <audio id="quizMusic" loop>
+        <source src="assets/AUDIO/gugur-bunga.mp3" type="audio/mp3">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <footer>
+        <p>&copy; 2024 Kuis Sejarah Indonesia. Semua Hak Dilindungi.</p>
+    </footer>
+
+    <script>
+        // JavaScript
+        function startQuiz() {
+            const music = document.getElementById('quizMusic');
+            const playPromise = music.play();
+
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => console.log("Musik mulai diputar."))
+                    .catch((error) => {
+                        console.error("Gagal memutar musik:", error);
+                        alert("Musik tidak dapat diputar. Silakan periksa pengaturan browser Anda.");
+                    });
+            }
+
+            setTimeout(() => {
+                window.location.href = "index.html"; // Ganti URL ke halaman kuis
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

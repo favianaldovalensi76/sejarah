@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Sejarah</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: aqua; /* Ganti dengan gambar latar yang sesuai */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+        #rules, .question-container, #result {
+            padding: 50px;
+            background-color: rgba(0, 0, 0, 0.7);
+            margin: auto;
+            border-radius: 10px;
+            width: 80%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            
+
+        }
+        #rules.show, .question-container.show, #result.show {
+            opacity: 1;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+        }
+        .option {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #555;
+            border-radius: 10px;
+            color: white;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .option:hover {
+            background-color: #666;
+        }
+        #scoreDisplay {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        audio {
+            display: none; /* Sembunyikan elemen audio */
+        }
+        #questionContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        #question {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        #questionImage {
+            margin: 20px 0;
+            width: 300px;
+            height: auto;
+        }
+        #result {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+        }
+        #result h2 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Backsound -->
+<audio id="myAudio">
+    <source src="gugur bunga.mp3" type="audio/mp3">
+    Browser Anda tidak mendukung audio.
+</audio>
+
+<div id="rules" class="show">
+    <h2>Aturan Permainan</h2>
+    <p>1. Jawaban yang benar mendapat 10 poin, jawaban salah mengurangi 5 poin.</p>
+    <p>2. Jika salah pada soal pertama, nilai menjadi -5.</p>
+    <p>3. Selamat bermain!</p>
+    <button id="startBtn">Mulai Game</button>
+</div>
+
+<div class="question-container" id="questionContainer">
+    <h2 id="question"></h2>
+    <img id="questionImage" src="" alt="Question Image">
+    <div id="options"></div>
+    <div id="scoreDisplay"></div>
+</div>
+
+<div id="result">
+    <h2 id="resultMessage"></h2>
+    <button id="restartBtn">Main Lagi</button>
+</div>
+
+<audio id="correctSound" src="audio/benar.mp3"></audio>
+<audio id="wrongSound" src="audio/salah.mp3"></audio>
+
+<script>
+    const questions = [
+        {
+            question: "Dimana Soekarno saat membacakan teks proklamasi?",
+            image:"assets/CSS/JS/IMG/dimana.jpeg",
+
+            options: ["Jalan Mawar No. 56", "Jalan Sudirman No. 12", "Jalan Pegangsaan Timur No. 56"],
+            answer: 2
+        },
+        {
+            question: "Siapa yang memproklamirkan kemerdekaan Indonesia?",
+            image: "assets/CSS/JS/IMG/soekarno.jpeg",
+            options: ["Soeharto", "Soekarno", "Habibie"],
+            answer: 1
+        },
+        {
+            question: "Apa nama peristiwa yang terjadi pada 30 September 1965?",
+            image:"assets/CSS/JS/IMG/g30s.jpeg",
+            options: ["G30S/PKI", "Proklamasi", "Reformasi"],
+            answer: 0
+        },
+        {
+            question: "Apa nama organisasi yang didirikan oleh Soekarno pada 1945?",
+            image: "assets/CSS/JS/IMG/pki.png",
+            options: ["PKI", "PNI", "Masyumi"],
+            answer: 1
+        },
+        {
+            question: "Siapa wakil presiden pertama Indonesia?",
+            image: "assets/CSS/JS/IMG/hatta.jpeg",
+            options: ["Soekarno", "Soeharto", "Mohammad Hatta"],
+            answer: 2
+        },
+        {
+            question: "Kapan Indonesia merdeka?",
+            image: "assets/CSS/JS/IMG/merdeka.jpeg",
+            options: ["17 Agustus 1945", "20 Mei 1908", "28 Oktober 1928"],
+            answer: 0
+        },
+        {
+            question: "Apa nama peristiwa yang mendorong reformasi pada tahun 1998?",
+            image: "assets/CSS/JS/IMG/suharto.jpeg",
+            options: ["G30S", "Aksi 98", "Soeharto Mundur"],
+            answer: 1
+        },
+        {
+            question: "Apa yang terjadi pada tahun 1949?",
+            image: "assets/CSS/JS/IMG/roem.jpeg",
+            options: ["Perjanjian Renville", "Proklamasi", "Konferensi Meja Bundar"],
+            answer: 2
+        },
+        {
+            question: "Siapa yang menjabat presiden setelah Soekarno?",
+            image: "assets/CSS/JS/IMG/mantap.jpeg",
+            options: ["B.J. Habibie", "Soeharto", "Megawati"],
+            answer: 1
+        },
+        {
+            question: "Apa nama gerakan yang memperjuangkan hak asasi manusia di Indonesia?",
+            image: "assets/CSS/JS/IMG/ham.jpeg",
+            options: ["Gerakan Reformasi", "Gerakan HAM", "Gerakan Nasional"],
+            answer: 1
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    document.getElementById("startBtn").onclick = function () {
+        const audio = document.getElementById("myAudio");
+        audio.play().catch(error => {
+            console.error("Autoplay error:", error);
+            alert("Klik halaman untuk memulai audio.");
+        });
+        document.getElementById("rules").classList.remove("show");
+        document.getElementById("questionContainer").classList.add("show");
+        loadQuestion();
+    };
+
+    function loadQuestion() {
+        const questionObj = questions[currentQuestion];
+        document.getElementById("question").innerText = questionObj.question;
+        document.getElementById("questionImage").src = questionObj.image;
+        const optionsContainer = document.getElementById("options");
+        optionsContainer.innerHTML = "";
+        questionObj.options.forEach((option, index) => {
+            const button = document.createElement("button");
+            button.innerText = option;
+            button.classList.add("option");
+            button.onclick = () => checkAnswer(index);
+            optionsContainer.appendChild(button);
+        });
+        updateScoreDisplay();
+    }
+
+    function checkAnswer(selectedIndex) {
+        if (selectedIndex === questions[currentQuestion].answer) {
+            score += 10;
+            document.getElementById("correctSound").play();
+        } else {
+            score -= (currentQuestion === 0) ? 5 : 5;
+            score = Math.max(score, -5);
+            document.getElementById("wrongSound").play();
+        }
+        updateScoreDisplay();
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            endGame();
+        }
+    }
+
+    function updateScoreDisplay() {
+        document.getElementById("scoreDisplay").innerText = `Skor Anda: ${score}`;
+    }
+
+    function endGame() {
+        document.getElementById("questionContainer").classList.remove("show");
+        document.getElementById("result").classList.add("show");
+        document.getElementById("resultMessage").innerText = `Selamat! Skor Akhir Anda: ${score}`;
+    }
+
+    document.getElementById("restartBtn").onclick = function () {
+        currentQuestion = 0;
+        score = 0;
+        document.getElementById("result").classList.remove("show");
+        document.getElementById("rules").classList.add("show");
+    };
+
+    window.onload = function () {
+        document.getElementById("rules").classList.add("show");
+    };
+</script>
+
+</body>
+</html>
